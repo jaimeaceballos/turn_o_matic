@@ -4,9 +4,9 @@
 	<h1>Nuevo tipo de cliente</h1>
 	<div class="row">
 		<div class="col-md-12">
-			<form role="form" action={% url 'tipo_cliente_save' %} method='POST'>{% csrf_token %}
+			<form role="form" action={% url 'cliente_save' %} method='POST'>{% csrf_token %}
 				<div class="form-group">
-					 {{ tipo_cliente.as_table }}
+					 {{ cliente.as_p }}
 				</div>
 				<button type="Guardar" class="btn btn-success">
 					Guardar

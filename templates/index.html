@@ -15,7 +15,9 @@
 	{% block cuerpo %}
 		<h1>Sistema Turn-o-Matic</h1>
 		<aside>
-			<a href="{% url 'tipo_cliente' %}">Gestionar Tipo de clientes</a>	
+			<a href="{% url 'tipo_cliente' %}">Gestionar Tipos de clientes</a><br>
+			<a href="{% url 'cliente' %}">Gestionar Clientes</a>	
+			<a href="{% url 'tramite' %}">Gestionar Tramites</a>	
 		</aside>
 	{% endblock cuerpo %}
 	<a href="{% url 'home' %}">Volver al inicio</a>

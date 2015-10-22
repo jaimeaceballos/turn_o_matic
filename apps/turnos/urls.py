@@ -9,5 +9,14 @@ urlpatterns = [
 	url(r'^tipo_cliente_save/$', views.tipo_cliente_save, name = 'tipo_cliente_save'),
 	url(r'^tipo_cliente_delete/(?P<id>\d+)/$', views.tipo_cliente_delete, name = 'tipo_cliente_delete'),
 	url(r'^tipo_cliente_edit/(?P<id>\d+)/$', views.tipo_cliente_edit, name = 'tipo_cliente_edit'),
-
+	url(r'^cliente/$', views.cliente, name='cliente'),
+	url(r'^cliente_nuevo/$', views.cliente_nuevo, name = 'cliente_nuevo'),
+	url(r'^cliente_save/$', views.cliente_save, name = 'cliente_save'),
+	url(r'^cliente_delete/(?P<id>\d+)/$', views.cliente_delete, name = 'cliente_delete'),
+	url(r'^cliente_edit/(?P<id>\d+)/$', views.cliente_edit, name = 'cliente_edit'),
+	url(r'^tramite/$', views.tramites, name='tramite'),
+	url(r'^tramite_nuevo/$', views.tramite_nuevo, name = 'tramite_nuevo'),
+	url(r'^tramite_save/$', views.tramite_save, name = 'tramite_save'),
+	url(r'^tramite_delete/(?P<id>\d+)/$', views.tramite_delete, name = 'tramite_delete'),
+	url(r'^tramite_edit/(?P<id>\d+)/$', views.tramite_edit, name = 'tramite_edit'),
 ]
