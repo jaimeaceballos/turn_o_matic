@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+ <div class="container-fluid">
+ 	<h1>Clientes</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Tramite
+						</th>
+						<th>
+							Acciones
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for elemento in listado %}
+					<tr>
+						<td>
+							{{ elemento.id }}
+						</td>
+						<td>
+							{{ elemento.descripcion }}	
+						</td>
+						<td>
+							<a href="{% url 'tramite_edit' elemento.id %}"><i class="glyphicon glyphicon-edit"></i></a>
+							<a href="{% url 'tramite_delete' elemento.id %}"><i class="glyphicon glyphicon-trash"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a href="{% url 'tramite_nuevo' %}" class="btn btn-success pull-right">Nuevo</a>
+</div>
+
+{% endblock cuerpo %}

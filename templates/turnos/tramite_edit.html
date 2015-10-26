@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block cuerpo %}
+<div class="container-fluid">
+	<h1>Editar Cliente</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<form role="form" action="{% url 'tramite_edit' id %}" method='POST'>{% csrf_token %}
+				<div class="form-group">
+					 {{ tramite.as_table }}
+				</div>
+				<button type="Guardar" class="btn btn-success">
+					Guardar
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock cuerpo%}
