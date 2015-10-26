@@ -27,3 +27,10 @@ class BoxAtencionForm(forms.ModelForm):
 		model 	= BoxAtencion
 		exclude = [] 		
 
+
+class AutoForm(forms.ModelForm):
+
+	class Meta:
+		model = Auto 
+		exclude = []
+

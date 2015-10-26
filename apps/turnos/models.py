@@ -3,6 +3,10 @@
 from django.db import models
 
 # Create your models here.
+# luego de crear los modelos debemos desde la consola 
+# python manage.py makemigrations
+# python manage.py migrate
+
 
 class TipoCliente(models.Model):
 	tipo 		= models.CharField(max_length=50)
@@ -23,6 +27,7 @@ class Tramites(models.Model):
 
 	def __unicode__(self):
 		return u'%s' % self.descripcion.upper()
+
 class BoxAtencion(models.Model):
 	turnoAtencion = models.CharField(max_length=999)
 	tipoAtencion = models.ForeignKey(TipoCliente)
@@ -31,3 +36,13 @@ class BoxAtencion(models.Model):
 
 	def __unicode__(self):
 		return u'%d' % self.turnoAtencion
+
+
+class Auto(models.Model):
+	patente 	= models.CharField(max_length=12)
+	marca_modelo = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return u'%s - %s' % (self.marca_modelo, self.patente)
+
+
