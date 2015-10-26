@@ -19,4 +19,9 @@ urlpatterns = [
 	url(r'^tramite_save/$', views.tramite_save, name = 'tramite_save'),
 	url(r'^tramite_delete/(?P<id>\d+)/$', views.tramite_delete, name = 'tramite_delete'),
 	url(r'^tramite_edit/(?P<id>\d+)/$', views.tramite_edit, name = 'tramite_edit'),
+	url(r'^auto_nuevo/$',views.auto_nuevo,name='auto_nuevo'),
+	url(r'^auto_save/$', views.auto_save, name = 'auto_save'),
+	url(r'^auto_edit/(?P<id>\d+)/$', views.auto_edit, name = 'auto_edit'),
+	url(r'^auto/$', views.auto, name='auto'),
+	url(r'^auto_delete/(?P<id>\d+)/$', views.auto_delete, name = 'auto_delete'),
 ]

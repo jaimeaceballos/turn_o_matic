@@ -21,3 +21,8 @@ class TramitesForm(forms.ModelForm):
 		model 	= Tramites
 		exclude = [] 
 
+class AutoForm(forms.ModelForm):
+
+	class Meta:
+		model = Auto 
+		exclude = []

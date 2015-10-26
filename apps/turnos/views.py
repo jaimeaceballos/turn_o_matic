@@ -179,3 +179,56 @@ def tramite_delete(request,id):
 	tramite = Tramites.objects.get(id=id)
 	tramite.delete()
 	return HttpResponseRedirect(reverse('tramite'))
+
+def auto_nuevo(request):
+	form = AutoForm()
+
+	values = {
+		'form' : form,
+	}
+
+	return render_to_response('auto_nuevo.html',values,context_instance=RequestContext(request))
+
+def auto_save(request):
+	if request.method == 'POST':
+		form = AutoForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('auto_nuevo'))
+
+	form = AutoForm()
+
+	values = {
+		'form' : form,
+	}
+
+	return render_to_response('auto.html',values,context_instance=RequestContext(request))
+
+def auto_edit(request,id):
+	objeto_auto = Auto.objects.get(id=id)
+	auto = AutoForm(instance=objeto_auto)
+	if request.method == 'POST':
+		form = AutoForm(request.POST)
+		if form.is_valid():
+			objeto_auto.patente			= form.cleaned_data['patente']
+			objeto_auto.marca_modelo		= form.cleaned_data['marca_modelo']
+			objeto_auto.save()
+			return HttpResponseRedirect(reverse('auto_nuevo'))
+	values = {
+		'form' : auto,
+		'id' 	  : id,
+	}
+
+	return render_to_response('auto_edit.html',values,context_instance=RequestContext(request))
+
+def auto(request):
+	listado = Auto.objects.all()
+	values = {
+		'listado' : listado,
+	}
+	return render_to_response('auto.html',values,context_instance=RequestContext(request))	
+
+def auto_delete(request,id):
+	auto = Auto.objects.get(id=id)
+	auto.delete()
+	return HttpResponseRedirect(reverse('auto'))

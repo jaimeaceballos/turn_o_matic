@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+	<form method="POST" action="{% url 'auto_save' %}">{% csrf_token %}
+	{{ form.as_p }}
+	<div>
+		<button type="Guardar" class="btn btn-success">
+					Guardar
+				</button>
+	</div>
+	</form>
+	
+{% endblock cuerpo %}
