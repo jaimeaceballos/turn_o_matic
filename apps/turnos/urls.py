@@ -40,4 +40,12 @@ urlpatterns = [
 	url(r'^auto/$', views.auto, name='auto'),
 	url(r'^auto_delete/(?P<id>\d+)/$', views.auto_delete, name = 'auto_delete'),
 
+	url(r'^turno/$', views.turno, name = 'turno'),#patty 
+	url(r'^turno_nuevo/$', views.turno_nuevo, name = 'turno_nuevo'),
+	url(r'^turno_save/$', views.turno_save, name = 'turno_save'),
+	url(r'^turno_delete/(?P<id>\d+)/$', views.turno_delete, name = 'turno_delete'),
+	url(r'^turno_edit/(?P<id>\d+)/$', views.turno_edit, name = 'turno_edit'),
+	
+	
+
 ]

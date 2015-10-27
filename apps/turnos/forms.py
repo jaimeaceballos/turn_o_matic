@@ -41,3 +41,10 @@ class AutoForm(forms.ModelForm):
 		model = Auto
 		exclude = []
 
+class TurnosForm(forms.ModelForm): #patty
+
+	class Meta:
+		model   = Turnos
+		exclude =[]
+
+

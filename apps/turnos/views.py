@@ -343,5 +343,63 @@ def sector_edit(request,id):
 		'id' 	  : id,
 	}
 
-	return render_to_response('turnos/sector_edit.html',values,context_instance=RequestContext(request))		
+	return render_to_response('turnos/sector_edit.html',values,context_instance=RequestContext(request))	
+
+
+
+def turno(request): #patty
+	listado = Turnos.objects.all()
+
+	values = {
+		'listado' : listado
+	}
+	return render_to_response('turnos/turno.html',values,context_instance=RequestContext(request))
+
+def turno_nuevo(request):
+	turno 	= TurnosForm()
+
+	values = {
+		'turno':turno,
+	}
+
+	return render_to_response('turnos/turno_nuevo.html',values,context_instance=RequestContext(request))
+
+def turno_save(request):
+	if request.method == 'POST':
+		turno = TurnosForm(request.POST)
+		if turno.is_valid():
+			turno.save()
+			
+		else:
+			values = {
+				'turno' : turno,
+				'errors'  : turno.errors,
+			}
+			return render_to_response('turnos/turno_nuevo.html',values,context_instance=RequestContext(request))
+	return HttpResponseRedirect(reverse('turno'))
+
+def turno_edit(request,id):
+	turno = TurnosForm(instance=Turnos.objects.get(id=id))
+	if request.method == 'POST':
+		form = TurnosForm(request.POST)
+		if form.is_valid():
+			turno = Turnos.objects.get(id=id)
+			turno.cliente			= form.cleaned_data['cliente']
+			turno.sector			= form.cleaned_data['sector']
+			turno.numero			= form.cleaned_data['numero']
+			turno.fecha			= form.cleaned_data['fecha']
+			turno.save()
+			return HttpResponseRedirect(reverse('turno'))
+	values = {
+		'turno' : turno,
+		'id' 	  : id,
+	}
+
+	return render_to_response('turnos/turno_edit.html',values,context_instance=RequestContext(request))
+
+def turno_delete(request,id):
+	turno = Turnos.objects.get(id=id)
+	turno.delete()
+	return HttpResponseRedirect(reverse('turno'))
+		
 
