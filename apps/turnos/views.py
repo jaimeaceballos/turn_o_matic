@@ -37,10 +37,10 @@ def tipo_cliente_save(request):
 	if request.method == 'POST': 									# si la peticion es por el metodo post
 		tipo_cliente = TipoClienteForm(request.POST) 				# obtengo el formulario desde el frontend
 		if tipo_cliente.is_valid(): 								# si el formulario es valido
-			tipo_cliente.save() 									# guardo en la base de datos 
+			tipo_cliente.save() 									# guardo en la base de datos
 			return HttpResponseRedirect(reverse('tipo_cliente'))	# luego de guardar vuelvo a la pantalla de tipos de cliente
 		else:														# si no es valido el formulario
-			values = { 												# genero un diccionario 
+			values = { 												# genero un diccionario
 				'tipo_cliente' : tipo_cliente, 						# le agrego el formulario obtenido desde el frontend
 				'errors'	   : tipo_cliente.errors, 				# agrego los errores
 			}
@@ -179,6 +179,8 @@ def tramite_delete(request,id):
 	tramite = Tramites.objects.get(id=id)
 	tramite.delete()
 	return HttpResponseRedirect(reverse('tramite'))
+	
+	
 
 def auto_nuevo(request):
 	form = AutoForm()
@@ -232,3 +234,56 @@ def auto_delete(request,id):
 	auto = Auto.objects.get(id=id)
 	auto.delete()
 	return HttpResponseRedirect(reverse('auto'))
+	
+def sector_nuevo(request):
+	sector 	= SectoresForm()
+
+	values = {
+		'sector':sector,
+	}
+
+	return render_to_response('turnos/sector_nuevo.html',values,context_instance=RequestContext(request))
+	
+def sectores(request):
+	listado = Sectores.objects.all()
+
+	values = {
+		'listado' : listado
+	}
+	return render_to_response('turnos/sector.html',values,context_instance=RequestContext(request))	
+	
+def sector_save(request):
+	if request.method == 'POST':
+		sector = SectoresForm(request.POST)
+		if sector.is_valid():
+			sector.save()
+			
+		else:
+			values = {
+				'sector' : sector,
+				'errors'  : sector.errors,
+			}
+			return render_to_response('turnos/sector_nuevo.html',values,context_instance=RequestContext(request))
+	return HttpResponseRedirect(reverse('sector'))
+	
+def sector_delete(request,id):
+	sector = Sectores.objects.get(id=id)
+	sector.delete()
+	return HttpResponseRedirect(reverse('sector'))
+	
+def sector_edit(request,id):
+	sector = SectoresForm(instance=Sectores.objects.get(id=id))
+	if request.method == 'POST':
+		form = SectoresForm(request.POST)
+		if form.is_valid():
+			sector = Sectores.objects.get(id=id)
+			sector.descripcion_sector		= form.cleaned_data['descripcion_sector']
+			sector.nombre_sector		= form.cleaned_data['nombre_sector']
+			sector.save()
+			return HttpResponseRedirect(reverse('sector'))
+	values = {
+		'sector' : sector,
+		'id' 	  : id,
+	}
+
+	return render_to_response('turnos/sector_edit.html',values,context_instance=RequestContext(request))		

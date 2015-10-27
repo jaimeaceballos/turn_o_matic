@@ -12,17 +12,23 @@ class TipoClienteForm(forms.ModelForm):
 class ClienteForm(forms.ModelForm):
 
 	class Meta:
-		model 	= Cliente 
+		model 	= Cliente
 		exclude = []
 
 class TramitesForm(forms.ModelForm):
 
 	class Meta:
 		model 	= Tramites
-		exclude = [] 
+		exclude = []
+		
+class SectoresForm(forms.ModelForm):
+
+         class Meta:
+                  model    = Sectores
+                  exclude  = []		
 
 class AutoForm(forms.ModelForm):
 
 	class Meta:
-		model = Auto 
+		model = Auto
 		exclude = []

@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block cuerpo %}
+<div class="container-fluid">
+	<h1>Nuevo Sector</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<form role="form" action={% url 'sector_save' %} method='POST'>{% csrf_token %}
+				<div class="form-group">
+					 {{ sector.as_p }}
+				</div>
+				<button type="Guardar" class="btn btn-success">
+					Guardar
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock cuerpo%}

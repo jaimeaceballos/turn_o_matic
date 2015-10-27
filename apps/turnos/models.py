@@ -3,7 +3,7 @@
 from django.db import models
 
 # Create your models here.
-# luego de crear los modelos debemos desde la consola 
+# luego de crear los modelos debemos desde la consola
 # python manage.py makemigrations
 # python manage.py migrate
 
@@ -26,6 +26,14 @@ class Tramites(models.Model):
 
 	def __unicode__(self):
 		return u'%s' % self.descripcion.upper()
+
+class Sectores(models.Model):
+
+         nombre_sector     = models.CharField(max_length=50)
+         descripcion_sector= models.CharField(max_length=200)
+
+         def _unicode_(self):
+                  return u'%s' % self.nombre_sector.upper()
 
 
 class Auto(models.Model):
