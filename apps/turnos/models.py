@@ -7,6 +7,7 @@ from django.db import models
 # python manage.py makemigrations
 # python manage.py migrate
 
+
 class TipoCliente(models.Model):
 	tipo 		= models.CharField(max_length=50)
 
@@ -27,6 +28,7 @@ class Tramites(models.Model):
 	def __unicode__(self):
 		return u'%s' % self.descripcion.upper()
 
+
 class Sectores(models.Model):
 
          nombre_sector     = models.CharField(max_length=50)
@@ -35,6 +37,16 @@ class Sectores(models.Model):
          def _unicode_(self):
                   return u'%s' % self.nombre_sector.upper()
 
+class BoxAtencion(models.Model):
+	turnoAtencion = models.CharField(max_length=999)
+	tipoAtencion = models.ForeignKey(TipoCliente)
+	clienteAtencion = models.ForeignKey(Cliente)
+	tramiteAtencion = models.ForeignKey(Tramites)
+
+	def __unicode__(self):
+		return u'%d' % self.turnoAtencion
+
+
 
 class Auto(models.Model):
 	patente 	= models.CharField(max_length=12)
@@ -42,4 +54,5 @@ class Auto(models.Model):
 
 	def __unicode__(self):
 		return u'%s - %s' % (self.marca_modelo, self.patente)
+
 

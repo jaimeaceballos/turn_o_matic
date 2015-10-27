@@ -180,7 +180,63 @@ def tramite_delete(request,id):
 	tramite.delete()
 	return HttpResponseRedirect(reverse('tramite'))
 	
-	
+
+
+def boxAtencion(request):
+	boxAtencion = BoxAtencion.objects.all()
+
+	values = {
+		'boxAtencion' : boxAtencion
+	}
+	return render_to_response('turnos/boxAtencion.html',values,context_instance=RequestContext(request))
+
+def boxAtencion_nuevo(request):
+	boxAtencion 	= BoxAtencionForm()
+
+	values = {
+		'boxAtencion':boxAtencion,
+	}
+
+	return render_to_response('turnos/boxAtencion_nuevo.html',values,context_instance=RequestContext(request))
+# vista que maneja la creacion de un nuevo tipo de cliente
+
+def boxAtencion_save(request):
+	if request.method == 'POST':
+		boxAtencion = BoxAtencionForm(request.POST)
+		if boxAtencion.is_valid():
+			boxAtencion.save()
+			
+		else:
+			values = {
+				'boxAtencion' : boxAtencion,
+				'errors'  : boxAtencion.errors,
+			}
+			return render_to_response('turnos/boxAtencion_nuevo.html',values,context_instance=RequestContext(request))
+	return HttpResponseRedirect(reverse('boxAtencion'))
+
+def boxAtencion_edit(request,id):
+	boxAtencion = BoxAtencionForm(instance=BoxAtencion.objects.get(id=id))
+	if request.method == 'POST':
+		form = BoxAtencionForm(request.POST)
+		if form.is_valid():
+			boxAtencion = BoxAtencion.objects.get(id=id)
+			boxAtencion.turnoAtencion 	= form.cleaned_data['turnoAtencion']
+			boxAtencion.tipoAtencion			= form.cleaned_data['tipoAtencion']
+			boxAtencion.clienteAtencion 			= form.cleaned_data['clienteAtencion']
+			boxAtencion.tramiteAtencion 			= form.cleaned_data['tramiteAtencion']
+			boxAtencion.save()
+			return HttpResponseRedirect(reverse('boxAtencion'))
+	values = {
+		'boxAtencion' : boxAtencion,
+		'id' 	  : id,
+	}
+	return render_to_response('turnos/boxAtencion_edit.html',values,context_instance=RequestContext(request))
+
+def boxAtencion_delete(request,id):
+	boxAtencion = BoxAtencion.objects.get(id=id)
+	boxAtencion.delete()
+	return HttpResponseRedirect(reverse('boxAtencion'))
+
 
 def auto_nuevo(request):
 	form = AutoForm()
@@ -234,6 +290,7 @@ def auto_delete(request,id):
 	auto = Auto.objects.get(id=id)
 	auto.delete()
 	return HttpResponseRedirect(reverse('auto'))
+
 	
 def sector_nuevo(request):
 	sector 	= SectoresForm()
@@ -287,3 +344,4 @@ def sector_edit(request,id):
 	}
 
 	return render_to_response('turnos/sector_edit.html',values,context_instance=RequestContext(request))		
+

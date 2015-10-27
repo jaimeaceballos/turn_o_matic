@@ -16,9 +16,14 @@
 		<h1>Sistema Turn-o-Matic</h1>
 		<aside>
 			<a href="{% url 'tipo_cliente' %}">Gestionar Tipos de clientes</a><br>
+
 			<a href="{% url 'cliente' %}">Gestionar Clientes</a><br>	
 			<a href="{% url 'tramite' %}">Gestionar Tramites</a><br>
-			<a href="{% url 'sector' %}">Gestionar Sectores</a>		
+			<a href="{% url 'sector' %}">Gestionar Sectores</a><br>	
+			<a href="{% url 'boxAtencion' %}">Gestionar Box de Atencion</a>	
+
+				
+
 		</aside>
 	{% endblock cuerpo %}
 	<a href="{% url 'home' %}">Volver al inicio</a>

@@ -19,14 +19,25 @@ urlpatterns = [
 	url(r'^tramite_save/$', views.tramite_save, name = 'tramite_save'),
 	url(r'^tramite_delete/(?P<id>\d+)/$', views.tramite_delete, name = 'tramite_delete'),
 	url(r'^tramite_edit/(?P<id>\d+)/$', views.tramite_edit, name = 'tramite_edit'),
+
 	url(r'^sector_nuevo/$', views.sector_nuevo, name = 'sector_nuevo'),#julian
 	url(r'^sector/$', views.sectores, name='sector'),#julian
 	url(r'^sector_save/$', views.sector_save, name = 'sector_save'),#julian
 	url(r'^sector_delete/(?P<id>\d+)/$', views.sector_delete, name = 'sector_delete'),#julian
 	url(r'^sector_edit/(?P<id>\d+)/$', views.sector_edit, name = 'sector_edit'),#julian
+
+
+	url(r'^boxAtencion/$', views.boxAtencion, name='boxAtencion'),
+	url(r'^boxAtencion_nuevo/$', views.boxAtencion_nuevo, name = 'boxAtencion_nuevo'),
+	url(r'^boxAtencion_save/$', views.boxAtencion_save, name = 'boxAtencion_save'),
+	url(r'^boxAtencion_delete/(?P<id>\d+)/$', views.boxAtencion_delete, name = 'boxAtencion_delete'),
+	url(r'^boxAtencion_edit/(?P<id>\d+)/$', views.boxAtencion_edit, name = 'boxAtencion_edit'),
+
+
 	url(r'^auto_nuevo/$',views.auto_nuevo,name='auto_nuevo'),
 	url(r'^auto_save/$', views.auto_save, name = 'auto_save'),
 	url(r'^auto_edit/(?P<id>\d+)/$', views.auto_edit, name = 'auto_edit'),
 	url(r'^auto/$', views.auto, name='auto'),
 	url(r'^auto_delete/(?P<id>\d+)/$', views.auto_delete, name = 'auto_delete'),
+
 ]

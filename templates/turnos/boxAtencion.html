@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+ <div class="container-fluid">
+ 	<h1>Box de Atencion</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Turno de Atencion
+						</th>
+						<th>
+							Tipo de Atencion
+						</th>
+						<th>
+							Tipo de Cliente
+						</th>
+						<th>
+							Tipo de Tramite
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for elemento in boxAtencion %}
+					<tr>
+						<td>
+							{{ elemento.id }}
+						</td>
+						<td>
+							{{ elemento.turnoAtencion }}	
+						</td>
+						<td>
+							{{ elemento.tipoAtencion }}	
+						</td>
+						<td>
+							{{ elemento.clienteAtencion }}	
+						</td>	
+							{{ elemento.tramiteAtencion }}	
+						</td>
+						<td>
+						<td>
+							<a href="{% url 'boxAtencion_edit' elemento.id %}"><i class="glyphicon glyphicon-edit"></i></a>
+							<a href="{% url 'boxAtencion_delete' elemento.id %}"><i class="glyphicon glyphicon-trash"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a href="{% url 'boxAtencion_nuevo' %}" class="btn btn-success pull-right">Nuevo</a>
+</div>
+
+{% endblock cuerpo %}

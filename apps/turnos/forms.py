@@ -27,8 +27,17 @@ class SectoresForm(forms.ModelForm):
                   model    = Sectores
                   exclude  = []		
 
+class BoxAtencionForm(forms.ModelForm):
+
+	class Meta:
+		model 	= BoxAtencion
+		exclude = [] 		
+
+
 class AutoForm(forms.ModelForm):
 
 	class Meta:
+
 		model = Auto
 		exclude = []
+
