@@ -56,3 +56,11 @@ class Auto(models.Model):
 		return u'%s - %s' % (self.marca_modelo, self.patente)
 
 
+class Turnos(models.Model): #patty
+	cliente   = models.ForeignKey(Cliente)
+	sector    =	models.IntegerField()
+	numero	  = models.IntegerField()
+	fecha     = models.DateField()
+
+	def __unicode__(self):
+		return u'%d' %self.cliente
