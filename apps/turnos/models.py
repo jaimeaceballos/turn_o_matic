@@ -24,18 +24,18 @@ class Cliente(models.Model):
 
 class Tramites(models.Model):
 	descripcion 	= models.CharField(max_length=50)
+	sector 			= models.ForeignKey('Sectores',default="1",related_name="tramite_asociado")
 
 	def __unicode__(self):
 		return u'%s' % self.descripcion.upper()
 
 
 class Sectores(models.Model):
+	nombre_sector     = models.CharField(max_length=50)
+	descripcion_sector= models.CharField(max_length=200)
 
-         nombre_sector     = models.CharField(max_length=50)
-         descripcion_sector= models.CharField(max_length=200)
-
-         def _unicode_(self):
-                  return u'%s' % self.nombre_sector.upper()
+	def __unicode__(self):
+		return u'%s' % self.nombre_sector.upper()
 
 class BoxAtencion(models.Model):
 	turnoAtencion = models.CharField(max_length=999)
