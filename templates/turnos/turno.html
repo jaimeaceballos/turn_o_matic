@@ -12,17 +12,16 @@
 							#
 						</th>
 						<th>
-							Tipo cliente
-						</th>
-						<th>
 							Sector
 						</th>
 						<th>
-							Numero
+							Cliente
 						</th>
-						
 						<th>
-							fecha
+							Turno
+						</th>
+						<th>
+							Fecha
 						</th>
 					</tr>
 				</thead>
@@ -36,7 +35,7 @@
 							{{ elemento.sector }}	
 						</td>
 						<td>
-							{{ elemento.cliente}}	
+							{% if elemento.cliente %}	{{ elemento.cliente }} {% else %} {{ elemento.no_cliente }} {% endif %}
 						</td>
 						<td>
 							{{ elemento.numero }}	

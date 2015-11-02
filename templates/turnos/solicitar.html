@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block cuerpo %}
+<div class="solicitud">
+	
+	<div class="formulario_solicita" >
+		{% block turno %}
+		<form method="POST" action="{% url 'solicita_turno' %}">{% csrf_token %}
+		<h1 class="solicitar-lbl">Turn-0-matic  -  Solicite su turno aqui...</h1><hr>
+		<div class = "form-group">
+			<label for="id_tramite" class="solicitar-lbl">
+					Seleccione el tramite que va a realizar
+			</label>
+			{{ form.tramite }}
+		</div>
+		<div class = "form-group">
+			<label for="id_tramite" class="solicitar-lbl">
+					Ingrese su numero de documento
+			</label>
+			{{ form.documento }}
+		</div>
+		<div>
+			<button type="submit" class="btn btn-danger btn-block pull-right">
+				Solicitar Turno
+			</button>
+		</div>
+		</form>
+		{% endblock turno %}
+	</div>
+	
+
+</div>
+{% endblock cuerpo %}
