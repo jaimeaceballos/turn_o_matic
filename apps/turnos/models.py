@@ -31,8 +31,9 @@ class Tramites(models.Model):
 
 
 class Sectores(models.Model):
-	nombre_sector     = models.CharField(max_length=50)
-	descripcion_sector= models.CharField(max_length=200)
+	nombre_sector     	= models.CharField(max_length=50)
+	descripcion_sector	= models.CharField(max_length=200)
+	codigo 			 	= models.CharField(max_length=2)
 
 	def __unicode__(self):
 		return u'%s' % self.nombre_sector.upper()
@@ -57,10 +58,14 @@ class Auto(models.Model):
 
 
 class Turnos(models.Model): #patty
-	cliente   = models.ForeignKey(Cliente)
-	sector    =	models.IntegerField()
-	numero	  = models.IntegerField()
-	fecha     = models.DateField()
-
+	cliente   	= models.ForeignKey(Cliente,null=True)
+	sector    	=	models.ForeignKey(Sectores)
+	numero	  	= models.IntegerField()
+	fecha     	= models.DateTimeField()
+	no_cliente 	= models.CharField(max_length=12,null=True,blank=True)
+	estado 		= models.CharField(max_length=25)
+	
 	def __unicode__(self):
-		return u'%d' %self.cliente
+		return u'%s' % self.cliente
+
+		

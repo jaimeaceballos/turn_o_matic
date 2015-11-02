@@ -47,4 +47,6 @@ class TurnosForm(forms.ModelForm): #patty
 		model   = Turnos
 		exclude =[]
 
-
+class SolicitarForm(forms.Form):
+	tramite 		= forms.ModelChoiceField(queryset=Tramites.objects.all(),empty_label=None)
+	documento 		= forms.CharField(max_length=10)

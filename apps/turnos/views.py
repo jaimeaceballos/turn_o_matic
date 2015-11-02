@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
+import datetime
 from .models import *
 from .forms import *
 
@@ -12,6 +13,50 @@ def home (request):
 		
 	values={} 										# Genero un diccionario de datos vacio para pasarlo al contexto
 	return render_to_response('index.html',values,context_instance = RequestContext(request)) # devuelvo al backend el template que debe renderizar con el contexto
+
+def vista_cliente(request):
+	solicitar 		= SolicitarForm()
+
+	values = {
+		'form' : solicitar,
+	}
+	return render_to_response('turnos/solicitar.html',values,context_instance = RequestContext(request)) # devuelvo al backend el template que debe renderizar con el contexto
+
+def solicita_turno(request):
+	if request.method == "POST":
+		solicitar 	= SolicitarForm(request.POST)
+		if solicitar.is_valid():
+			tramite 	= solicitar.cleaned_data['tramite']
+			codigo_sector = tramite.sector
+			ultimo_turno 	= Turnos.objects.filter(sector=codigo_sector).order_by('-id')[:1]
+			if ultimo_turno and ultimo_turno[0].numero < 999:
+				numero = ultimo_turno[0].numero + 1
+			else:
+				numero = 1
+			turno = Turnos()
+			try:
+				cliente 	= Cliente.objects.get(dni=solicitar.cleaned_data['documento'])
+				turno.cliente = cliente				
+			except:
+				turno.no_cliente 	= solicitar.cleaned_data['documento']
+			finally:
+				turno.sector = codigo_sector
+				turno.numero = numero
+				turno.fecha = datetime.datetime.now()
+				turno.estado = "ESPERA"				
+				turno.save()			
+			values = {
+				'turno' : turno,
+			}
+			return render_to_response('turnos/turno_ok.html',values,context_instance = RequestContext(request))
+	return HttpResponseRedirect(reverse('vista_cliente'))
+
+def ultimos_turnos(request):
+	ultimos_turnos = Turnos.objects.all().order_by('-id')[:5]
+	values = {
+		'ultimos_turnos' : ultimos_turnos,
+	}
+	return render_to_response('turnos/ultimos_turnos.html',values,context_instance = RequestContext(request))
 
 # vista que maneja la pantalla de tipos de clientes
 def tipo_cliente(request):

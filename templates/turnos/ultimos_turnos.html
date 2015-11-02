@@ -1,0 +1,26 @@
+{% extends 'turnos/solicitar.html' %}
+
+{% block turno %}
+	<center><h1 class="solicitar-lbl">Ultimos Turnos</h1></center>
+	<table class="table table-condensed">
+				<tbody class="solicitar-lbl">
+					{% for elemento in ultimos_turnos %}
+					<tr>
+						<td>
+							{{ elemento.sector.codigo }}{{ elemento.numero }}
+						</td>
+						<td>
+							{% if elemento.cliente %}	{{ elemento.cliente }} {% else %} {{ elemento.no_cliente }} {% endif %}
+						</td>
+						<td>
+							Espera desde: {{ elemento.fecha }}	
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<div class="pull-right">
+			<iframe scrolling="no" frameborder="no" clocktype="html5" style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="http://www.clocklink.com/html5embed.php?clock=018&timezone=GMT-0300&color=yellow&size=240&Title=&Message=&Target=&From=2015,1,1,0,0,0&DateFormat=dd  MMM  yyyy &TimeFormat=hh:mm:ss TT&Color=yellow"></iframe>
+			</div>
+{% endblock turno %}

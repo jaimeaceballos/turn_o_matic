@@ -4,6 +4,11 @@ from . import views
 
 
 urlpatterns = [
+	url(r'^vista_cliente/$', views.vista_cliente, name='vista_cliente'),
+	url(r'^solicita_turno/$', views.solicita_turno, name='solicita_turno'),
+	url(r'^ultimos_turnos/$', views.ultimos_turnos, name='ultimos_turnos'),
+	
+
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),
 	url(r'^tipo_cliente_save/$', views.tipo_cliente_save, name = 'tipo_cliente_save'),

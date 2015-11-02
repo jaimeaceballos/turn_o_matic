@@ -1,0 +1,33 @@
+.solicitud{
+	background-color: #b22222;
+	height: 100%;
+	width: 100%;
+	display: block;
+}
+
+html,body{
+
+margin:0px;
+
+height:100%;
+
+}
+
+.formulario_solicita{
+	position: absolute;
+	top: 20%;
+	left: 30%;
+	border-top: 1px solid white;
+  	border-right: 1px solid white;
+  	border-bottom: 1px solid white;
+  	border-left: 1px solid white;
+  	padding: 15px;
+  	border-radius: 5px;
+  	-webkit-box-shadow: -2px -2px 69px -3px rgba(136,136,136,0.94);
+-moz-box-shadow: -2px -2px 69px -3px rgba(136,136,136,0.94);
+box-shadow: -2px -2px 69px -3px rgba(136,136,136,0.94);
+}
+
+.solicitar-lbl{
+	color:white;
+}

@@ -15,6 +15,9 @@
 							Tramite
 						</th>
 						<th>
+							Sector
+						</th>
+						<th>
 							Acciones
 						</th>
 					</tr>
@@ -28,6 +31,9 @@
 						<td>
 							{{ elemento.descripcion }}	
 						</td>
+						<td>
+							{{ elemento.sector }}
+						</td>	
 						<td>
 							<a href="{% url 'tramite_edit' elemento.id %}"><i class="glyphicon glyphicon-edit"></i></a>
 							<a href="{% url 'tramite_delete' elemento.id %}"><i class="glyphicon glyphicon-trash"></i></a>
