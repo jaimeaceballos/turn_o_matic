@@ -465,5 +465,6 @@ def vista_empleado(request):
 
 
 def atender_siguiente(sectores):
-	for sector_in in sectores:
-		turnos.append(Turno.objects.filter(estado="ESPERA",sector=sector_in).order_by('fecha'))
+	
+	for sector in sectores:
+		filtro = Turnos.objects.filter(estado='ESPERA',sector=sector)

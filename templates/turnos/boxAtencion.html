@@ -49,7 +49,7 @@ function deshabilitar(){
 							{% endfor %}	
 						</td>	
 						<td>
-							{% if elemento.habilitado %} Habilitado <a href="{% url 'boxAtencion_cambiar_estado' elemento.id %}"><i class="glyphicon glyphicon-remove-circle"></i></a> {% else %} No Habilitado <a href="{% url 'boxAtencion_cambiar_estado' elemento.id %}"><i class="glyphicon glyphicon-ok-circle"></i></a> {% endif %}	
+							{% if elemento.habilitado %} <a class="btn btn-xs btn-success" href="{% url 'boxAtencion_cambiar_estado' elemento.id %}"> Habilitado <span class="badge"><i class="glyphicon glyphicon-remove-circle"></i></span></a> {% else %} <a class="btn btn-xs btn-danger" href="{% url 'boxAtencion_cambiar_estado' elemento.id %}"> No Habilitado <span class="badge"> <i class="glyphicon glyphicon-ok-circle"></i></span></a> {% endif %}	
 						</td>
 						
 						<td>
