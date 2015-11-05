@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 			<form role="form" action="{% url 'boxAtencion_edit' id %}" method='POST'>{% csrf_token %}
 				<div class="form-group">
-					 {{ boxAtencion.as_table }}
+					 {{ boxAtencion.as_ul }}
 				</div>
 				<button type="Guardar" class="btn btn-success">
 					Guardar

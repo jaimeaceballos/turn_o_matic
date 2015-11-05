@@ -39,13 +39,13 @@ class Sectores(models.Model):
 		return u'%s' % self.nombre_sector.upper()
 
 class BoxAtencion(models.Model):
-	turnoAtencion = models.CharField(max_length=999)
-	tipoAtencion = models.ForeignKey(TipoCliente)
-	clienteAtencion = models.ForeignKey(Cliente)
-	tramiteAtencion = models.ForeignKey(Tramites)
+	nro_box			= models.IntegerField()
+	empleado 		= models.CharField(max_length=50)
+	habilitado 		= models.BooleanField(default=False)
+	sectores 		= models.ManyToManyField(Sectores)
 
 	def __unicode__(self):
-		return u'%d' % self.turnoAtencion
+		return u'%d - %s' % (self.nro_box,self.empleado)
 
 
 

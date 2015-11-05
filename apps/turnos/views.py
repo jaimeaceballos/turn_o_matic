@@ -265,10 +265,10 @@ def boxAtencion_edit(request,id):
 		form = BoxAtencionForm(request.POST)
 		if form.is_valid():
 			boxAtencion = BoxAtencion.objects.get(id=id)
-			boxAtencion.turnoAtencion 	= form.cleaned_data['turnoAtencion']
-			boxAtencion.tipoAtencion			= form.cleaned_data['tipoAtencion']
-			boxAtencion.clienteAtencion 			= form.cleaned_data['clienteAtencion']
-			boxAtencion.tramiteAtencion 			= form.cleaned_data['tramiteAtencion']
+			boxAtencion.nro_box 	= form.cleaned_data['nro_box']
+			boxAtencion.empleado			= form.cleaned_data['empleado']
+			boxAtencion.sectores 			= form.cleaned_data['sectores']
+			boxAtencion.habilitado 			= form.cleaned_data['habilitado']
 			boxAtencion.save()
 			return HttpResponseRedirect(reverse('boxAtencion'))
 	values = {
@@ -448,3 +448,22 @@ def turno_delete(request,id):
 	return HttpResponseRedirect(reverse('turno'))
 		
 
+def boxAtencion_cambiar_estado(request,id):
+	box = BoxAtencion.objects.get(id=id)
+	if box.habilitado:
+		box.habilitado = False
+		box.save()
+	else:
+		box.habilitado = True 
+		box.save()
+	return HttpResponseRedirect(reverse('boxAtencion'))
+
+def vista_empleado(request):
+	box 	= boxAtencion.objects.get(id=1)
+	sectores = box.sectores.all()
+	pass
+
+
+def atender_siguiente(sectores):
+	for sector_in in sectores:
+		turnos.append(Turno.objects.filter(estado="ESPERA",sector=sector_in).order_by('fecha'))

@@ -7,7 +7,7 @@ urlpatterns = [
 	url(r'^vista_cliente/$', views.vista_cliente, name='vista_cliente'),
 	url(r'^solicita_turno/$', views.solicita_turno, name='solicita_turno'),
 	url(r'^ultimos_turnos/$', views.ultimos_turnos, name='ultimos_turnos'),
-	
+	url(r'^vista_empleado/$', views.vista_empleado, name='vista_empleado'),
 
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),
@@ -37,6 +37,7 @@ urlpatterns = [
 	url(r'^boxAtencion_save/$', views.boxAtencion_save, name = 'boxAtencion_save'),
 	url(r'^boxAtencion_delete/(?P<id>\d+)/$', views.boxAtencion_delete, name = 'boxAtencion_delete'),
 	url(r'^boxAtencion_edit/(?P<id>\d+)/$', views.boxAtencion_edit, name = 'boxAtencion_edit'),
+	url(r'^boxAtencion_cambiar_estado/(?P<id>\d+)/$', views.boxAtencion_cambiar_estado, name = 'boxAtencion_cambiar_estado'),
 
 
 	url(r'^auto_nuevo/$',views.auto_nuevo,name='auto_nuevo'),
