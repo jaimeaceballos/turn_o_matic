@@ -458,13 +458,21 @@ def boxAtencion_cambiar_estado(request,id):
 		box.save()
 	return HttpResponseRedirect(reverse('boxAtencion'))
 
-def vista_empleado(request):
-	box 	= boxAtencion.objects.get(id=1)
-	sectores = box.sectores.all()
-	pass
+def vista_empleado(request,id):
+	box 	= BoxAtencion.objects.get(id=id)
+	"""turno 	= atender_siguiente()
+	turno.estado = "ATENCION"
+	turno.atendido_por = box
+	turno.save()"""
+	values = {
+		'box' : box,
+		#'turno': turno,
+	}
+	return render_to_response('turnos/atencion.html',values,context_instance=RequestContext(request))
 
 
-def atender_siguiente(sectores):
-	
-	for sector in sectores:
-		filtro = Turnos.objects.filter(estado='ESPERA',sector=sector)
+
+
+def atender_siguiente():
+	filtro = Turnos.objects.filter(estado='ESPERA').order_by('fecha')
+	return filtro.first()

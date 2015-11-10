@@ -64,6 +64,7 @@ class Turnos(models.Model): #patty
 	fecha     	= models.DateTimeField()
 	no_cliente 	= models.CharField(max_length=12,null=True,blank=True)
 	estado 		= models.CharField(max_length=25)
+	atendido_por= models.ForeignKey(BoxAtencion,null=True)
 	
 	def __unicode__(self):
 		return u'%s' % self.cliente

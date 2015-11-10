@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+	<div class="jumbotron">
+		<h1>BOX DE ATENCION Nro. {{ box.nro_box }}</h1>
+		<h2>Estado  {% if box.habilitado %} <i class="glyphicon glyphicon-ok"></i> {% else %} <i class="glyphicon glyphicon-remove"></i> {% endif %}</h2>
+		<h2>Datos del empleado</h2>
+		<p>{{ box.empleado }}</p>
+	</div>
+	{% if box.habilitado %}
+			<div>
+				<h1> Turno Actual </h1>
+
+				<label>Nro.: </label> {{ turno.sector.codigo }}{{turno.numero}}
+				<label>Cliente: </label> {% if turno.cliente %} {{ turno.cliente }} {% else %} {{ turno.nro_cliente }} {% endif %}
+				<label>Espera desde: </label> {{ turno.fecha }}
+
+			</div>
+			<h2>Aca los botones de atender siguiente - finalizar atencion actual - derivar turno actual</h2>
+	{% else %}
+		<h1>Este box no esta habilitado para la atencion a clientes.</h1>
+	{% endif %}
+{% endblock cuerpo %}
