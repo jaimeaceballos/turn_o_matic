@@ -8,6 +8,10 @@ urlpatterns = [
 	url(r'^solicita_turno/$', views.solicita_turno, name='solicita_turno'),
 	url(r'^ultimos_turnos/$', views.ultimos_turnos, name='ultimos_turnos'),
 	url(r'^vista_empleado/(?P<id>\d+)/$', views.vista_empleado, name='vista_empleado'),
+	url(r'^atender_siguiente/(?P<id>\d+)/$', views.atiende_siguiente, name='atender_siguiente'),
+	url(r'^finalizar_atencion/(?P<idTurno>\d+)/$', views.finalizar_atencion, name='finalizar_atencion'),
+	url(r'^derivar_atencion/(?P<box>\d+)/(?P<idTurno>\d+)/$', views.derivar_atencion, name='derivar_atencion'),
+
 
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),

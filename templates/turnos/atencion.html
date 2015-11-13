@@ -10,13 +10,38 @@
 	{% if box.habilitado %}
 			<div>
 				<h1> Turno Actual </h1>
-
-				<label>Nro.: </label> {{ turno.sector.codigo }}{{turno.numero}}
-				<label>Cliente: </label> {% if turno.cliente %} {{ turno.cliente }} {% else %} {{ turno.nro_cliente }} {% endif %}
-				<label>Espera desde: </label> {{ turno.fecha }}
-
+				{% block turno_actual %}
+					{% if turno.derivado_a %}
+						<div id="alert" class="alert alert-success" role="alert">
+							<p>El Cliente viene derivado desde el sector {{ turno.sector }}</p>				
+						</div>
+					{% endif %}
+					<div class="form-control">
+					<label>Nro.: </label> {{ turno.sector.codigo }}{{turno.numero}}
+					</div>
+					<div class="form-control">
+					<label>Cliente: </label> {% if turno.cliente %} {{ turno.cliente.nombre }} {% else %} {{ turno.no_cliente }} {% endif %}
+					</div>
+					<div class="form-control">
+					<label>Tramite: </label> {{ turno.tramite }}
+					</div>
+					<div class="form-control">
+					<label>Espera desde: </label> {{ turno.fecha }}
+					</div>
+				{% endblock turno_actual %}
 			</div>
-			<h2>Aca los botones de atender siguiente - finalizar atencion actual - derivar turno actual</h2>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="pull-right">
+						{% if not turno %} 
+						<a href="{% url 'atender_siguiente' box.id %}" class="btn btn-xs btn-primary">Atender</a>
+						{% else %}
+						<a href="{% url 'derivar_atencion' box.id turno.id %}" class="btn btn-xs btn-info">Deriviar atencion</a>
+						<a href="{% url 'finalizar_atencion' turno.id %}" class="btn btn-xs btn-danger">Finalizar atencion</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
 	{% else %}
 		<h1>Este box no esta habilitado para la atencion a clientes.</h1>
 	{% endif %}

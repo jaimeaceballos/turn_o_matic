@@ -43,7 +43,8 @@ def solicita_turno(request):
 				turno.sector = codigo_sector
 				turno.numero = numero
 				turno.fecha = datetime.datetime.now()
-				turno.estado = "ESPERA"				
+				turno.estado = "ESPERA"	
+				turno.tramite = tramite			
 				turno.save()			
 			values = {
 				'turno' : turno,
@@ -460,18 +461,46 @@ def boxAtencion_cambiar_estado(request,id):
 
 def vista_empleado(request,id):
 	box 	= BoxAtencion.objects.get(id=id)
-	"""turno 	= atender_siguiente()
-	turno.estado = "ATENCION"
-	turno.atendido_por = box
-	turno.save()"""
+	
 	values = {
 		'box' : box,
-		#'turno': turno,
 	}
 	return render_to_response('turnos/atencion.html',values,context_instance=RequestContext(request))
 
+def atiende_siguiente(request,id):
+	box 	= BoxAtencion.objects.get(id=id)
+	turno 	= atender_siguiente()
+	turno.estado = "ATENCION"
+	turno.atendido_por = box
+	turno.save()
+	values = {
+		'box' : box,
+		'turno':turno,
+	}
+	return render_to_response('turnos/atencion.html',values,context_instance=RequestContext(request))
 
+def finalizar_atencion(request,idTurno):
+	turno = Turnos.objects.get(id=idTurno)
+	turno.estado = "FINALIZADO"
+	turno.save()
+	return HttpResponseRedirect(reverse('vista_empleado',args=[turno.atendido_por.id]))
 
+def derivar_atencion(request,box,idTurno):
+	box 	= BoxAtencion.objects.get(id=box)
+	turno = Turnos.objects.get(id=idTurno)
+	form = TurnosForm(instance=turno)
+	if request.method == 'POST':
+		form = TurnosForm(request.POST)
+		turno.derivado_a = Sectores.objects.get(id=form.data['derivado_a'])
+		turno.estado = 'ESPERA'
+		turno.save()
+		return HttpResponseRedirect(reverse('vista_empleado',args=[box.id]))
+	values = {
+		'box' : box,
+		'turno' : turno,
+		'form' : form,
+	}
+	return render_to_response('turnos/derivar_turno.html',values,context_instance=RequestContext(request))
 
 def atender_siguiente():
 	filtro = Turnos.objects.filter(estado='ESPERA').order_by('fecha')

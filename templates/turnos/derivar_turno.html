@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block cuerpo %}
+	<div class="row jumbotron">
+		<form method="POST" action="{% url 'derivar_atencion' box.id turno.id %}">{% csrf_token %}
+		<div class="col-md-12">
+			<div class="form-control">
+				<label>Turno: </label> {{turno.sector.codigo}}{{turno.numero}}
+			</div>
+			<div class="form-control">
+				<label>Cliente: </label> {% if turno.cliente %} {{ turno.cliente.nombre }} {% else %} {{ turno.no_cliente }} {% endif %}
+			</div>
+			<div class="form-control">
+				<label>Espera desde: </label> {{ turno.fecha }}
+			</div>
+			<div class="form-control">
+				{{ form.derivado_a }}
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="pull-right">
+				<button type="submit" class="btn btn-danger btn-block pull-right">
+					Derivar
+				</button>
+			</div>
+		</div>
+		</form>
+	</div>
+	
+{% endblock cuerpo %}
