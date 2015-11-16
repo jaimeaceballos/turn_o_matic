@@ -14,7 +14,6 @@ urlpatterns = [
 	url(r'^derivar_atencion/(?P<box>\d+)/(?P<idTurno>\d+)/$', views.derivar_atencion, name='derivar_atencion'),
 	url(r'^ultimo_espera/$', views.ultimo_espera, name='ultimo_espera'),
 	url(r'^nuevo_atencion/$', views.nuevo_atencion, name='nuevo_atencion'),
-	url(r'^obtener_codigo_sector/(?P<id>\d+)/$', views.obtener_codigo_sector, name='obtener_codigo_sector'),
 
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),

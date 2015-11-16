@@ -59,8 +59,10 @@ def solicita_turno(request):
 
 def ultimos_turnos(request):
 	ultimos_turnos = Turnos.objects.filter(estado='ESPERA').order_by('id')[:10]
+	turnos_atencion = Turnos.objects.filter(estado='ATENCION').order_by('id')[:10]
 	values = {
 		'ultimos_turnos' : ultimos_turnos,
+		'turnos_atencion': turnos_atencion,
 	}
 	return render_to_response('turnos/ultimos_turnos.html',values,context_instance = RequestContext(request))
 
@@ -549,8 +551,3 @@ def nuevo_atencion(request):
 	data = serializers.serialize("json", [nuevo_atencion,])
 	return HttpResponse(data, content_type='application/json')
 
-def obtener_codigo_sector(request,id):
-	data 	= request.POST
-	codigo = Sectores.objects.get(id=id)
-	data = serializers.serialize("json",[codigo,])
-	return HttpResponse(data,content_type='application/json')

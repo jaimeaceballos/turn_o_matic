@@ -1,6 +1,8 @@
 {% extends 'turnos/solicitar.html' %}
 
 {% block turno %}
+	<div class="row">
+	<div class="col-md-6">
 	<center><h1 class="solicitar-lbl">Ultimos Turnos</h1></center>
 	<table class="table table-condensed" id="tabla-turnos">
 				<tbody class="solicitar-lbl">
@@ -19,10 +21,33 @@
 					{% endfor %}
 				</tbody>
 			</table>
-
+		</div>
+		<div class="col-md-6">
+			<center><h1 class="solicitar-lbl">Turnos en atencion</h1></center>
+			<table class="table table-condensed" id="tabla-atencion">
+				<tbody class="solicitar-lbl">
+					{% for elemento in turnos_atencion %}
+					<tr id="{{elemento.id}}">
+						<td>
+							{{ elemento.sector.codigo }}{{ elemento.numero }}
+						</td>
+						<td>
+							{% if elemento.cliente %}	{{ elemento.cliente }} {% else %} {{ elemento.no_cliente }} {% endif %}
+						</td>
+						<td>
+							Espera desde: {{ elemento.fecha }}	
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+		<div>	
 			<div class="pull-right">
 			<iframe scrolling="no" frameborder="no" clocktype="html5" style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="http://www.clocklink.com/html5embed.php?clock=018&timezone=GMT-0300&color=yellow&size=240&Title=&Message=&Target=&From=2015,1,1,0,0,0&DateFormat=dd  MMM  yyyy &TimeFormat=hh:mm:ss TT&Color=yellow"></iframe>
 			</div>
+		</div>
 			<script type="text/javascript">
 				setInterval(function(){
 					$.get("/turnos/nuevo_atencion/",function(data){
@@ -31,8 +56,11 @@
 								if ($('#'+data[i]['fields']['turno'])){
 									fila = $('#'+data[i]['fields']['turno']);
 									fila.fadeOut(2000);
+									atencion = $("#tabla-atencion");
+									setTimeout(atencion.append(fila),2000);
+									fila.fadeIn(2000);
 								}
-								//alert('$("#'+data[i]['fields']['turno']+'")')
+								
 							}
 						}
 					});
@@ -43,10 +71,11 @@
 							tabla.append('<tr id="'+ data2.id +'" style="display:none"><td>'+data2.turno+'</td><td>'+ data2.cliente +'</td><td>Espera desde: '+ data2.fecha +'</td></tr>');
 							$('#'+data2.id).fadeIn(2000);
 						}
-						//alert('$("#'+data[i]['fields']['turno']+'")')
+						
 							
 						
 					});
 				}, 2000);
 			</script>
+		
 {% endblock turno %}
