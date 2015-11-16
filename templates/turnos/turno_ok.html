@@ -3,7 +3,7 @@
 {% block turno %}
 	<h1 class="solicitar-lbl">Turno generado</h1><hr>
 	<div>
-		<p class="solicitar-lbl"><b>Cliente: </b> {{turno.cliente}}</p><br>
+		<p class="solicitar-lbl"><b>Cliente: </b> {% if turno.cliente %} {{turno.cliente}} {% else %} {{ turno.no_cliente }} {% endif %}</p><br>
 		<p class="solicitar-lbl"><b>Turno: </b> {{turno.sector.codigo}}{{turno.numero}}</p><br>
 		<p class="solicitar-lbl"><b>Fecha y hora: </b> {{turno.fecha}}</p><br>
 

@@ -2,6 +2,8 @@ from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
+from django.core import serializers
+import json
 import datetime
 from .models import *
 from .forms import *
@@ -45,7 +47,10 @@ def solicita_turno(request):
 				turno.fecha = datetime.datetime.now()
 				turno.estado = "ESPERA"	
 				turno.tramite = tramite			
-				turno.save()			
+				turno.save()	
+				turno_espera = TurnosEspera()
+				turno_espera.turno = turno
+				turno_espera.save()		
 			values = {
 				'turno' : turno,
 			}
@@ -53,11 +58,14 @@ def solicita_turno(request):
 	return HttpResponseRedirect(reverse('vista_cliente'))
 
 def ultimos_turnos(request):
-	ultimos_turnos = Turnos.objects.all().order_by('-id')[:5]
+	ultimos_turnos = Turnos.objects.filter(estado='ESPERA').order_by('id')[:10]
 	values = {
 		'ultimos_turnos' : ultimos_turnos,
 	}
 	return render_to_response('turnos/ultimos_turnos.html',values,context_instance = RequestContext(request))
+
+def turnos_atencion(request):
+	pass
 
 # vista que maneja la pantalla de tipos de clientes
 def tipo_cliente(request):
@@ -473,6 +481,11 @@ def atiende_siguiente(request,id):
 	turno.estado = "ATENCION"
 	turno.atendido_por = box
 	turno.save()
+	turno_atencion = TurnosAtencion()
+	turnos_espera = TurnosEspera.objects.get(turno=turno.id)
+	turnos_espera.delete()
+	turno_atencion.turno = turno
+	turno_atencion.save()
 	values = {
 		'box' : box,
 		'turno':turno,
@@ -482,7 +495,10 @@ def atiende_siguiente(request,id):
 def finalizar_atencion(request,idTurno):
 	turno = Turnos.objects.get(id=idTurno)
 	turno.estado = "FINALIZADO"
+	turno.fecha_fin = datetime.datetime.now()
 	turno.save()
+	turnos_atencion = TurnosAtencion.objects.get(turno=turno.id)
+	turnos_atencion.delete()
 	return HttpResponseRedirect(reverse('vista_empleado',args=[turno.atendido_por.id]))
 
 def derivar_atencion(request,box,idTurno):
@@ -494,6 +510,11 @@ def derivar_atencion(request,box,idTurno):
 		turno.derivado_a = Sectores.objects.get(id=form.data['derivado_a'])
 		turno.estado = 'ESPERA'
 		turno.save()
+		turnos_atencion = TurnosAtencion.objects.get(turno=turno.id)
+		turnos_atencion.delete()
+		turnos_espera = TurnosEspera()
+		turnos_espera.turno = turno
+		turnos_espera.save()
 		return HttpResponseRedirect(reverse('vista_empleado',args=[box.id]))
 	values = {
 		'box' : box,
@@ -505,3 +526,31 @@ def derivar_atencion(request,box,idTurno):
 def atender_siguiente():
 	filtro = Turnos.objects.filter(estado='ESPERA').order_by('fecha')
 	return filtro.first()
+
+def ultimo_espera(request):
+	data 		= request.POST
+	ultimo 	= Turnos.objects.get(id=TurnosEspera.objects.latest('id').turno.id)
+	if ultimo.cliente:
+		cliente = ultimo.cliente.nombre
+	else:
+		cliente = ultimo.no_cliente
+	ultimo_espera = {
+		'id':ultimo.id,
+		'turno' : ultimo.sector.codigo+str(ultimo.numero),
+		'cliente' :cliente,
+		'fecha' : ultimo.fecha.strftime('%d de %b. %Y %H:%M:%S'),
+	}
+	data = json.dumps(ultimo_espera)
+	return HttpResponse(data, content_type='application/json')
+
+def nuevo_atencion(request):
+	data 		= request.POST
+	nuevo_atencion 	= TurnosAtencion.objects.latest('id')
+	data = serializers.serialize("json", [nuevo_atencion,])
+	return HttpResponse(data, content_type='application/json')
+
+def obtener_codigo_sector(request,id):
+	data 	= request.POST
+	codigo = Sectores.objects.get(id=id)
+	data = serializers.serialize("json",[codigo,])
+	return HttpResponse(data,content_type='application/json')

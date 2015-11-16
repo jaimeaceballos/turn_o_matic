@@ -59,7 +59,7 @@ class Auto(models.Model):
 
 class Turnos(models.Model): #patty
 	cliente   	= models.ForeignKey(Cliente,null=True)
-	sector    	=	models.ForeignKey(Sectores)
+	sector    	= models.ForeignKey(Sectores)
 	numero	  	= models.IntegerField()
 	fecha     	= models.DateTimeField()
 	no_cliente 	= models.CharField(max_length=12,null=True,blank=True)
@@ -67,8 +67,13 @@ class Turnos(models.Model): #patty
 	atendido_por= models.ForeignKey(BoxAtencion,null=True)
 	derivado_a  = models.ForeignKey(Sectores,null=True,related_name='derivado')
 	tramite 	= models.ForeignKey(Tramites,null=True)
+	fecha_fin 	= models.DateTimeField(null=True)
 	
 	def __unicode__(self):
 		return u'%s' % self.cliente
 
-		
+class TurnosAtencion(models.Model):
+	turno 	= models.ForeignKey(Turnos)
+
+class TurnosEspera(models.Model):
+	turno 	= models.ForeignKey(Turnos)

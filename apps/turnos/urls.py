@@ -7,11 +7,14 @@ urlpatterns = [
 	url(r'^vista_cliente/$', views.vista_cliente, name='vista_cliente'),
 	url(r'^solicita_turno/$', views.solicita_turno, name='solicita_turno'),
 	url(r'^ultimos_turnos/$', views.ultimos_turnos, name='ultimos_turnos'),
+	url(r'^turnos_atencion/$', views.turnos_atencion, name='turnos_atencion'),
 	url(r'^vista_empleado/(?P<id>\d+)/$', views.vista_empleado, name='vista_empleado'),
 	url(r'^atender_siguiente/(?P<id>\d+)/$', views.atiende_siguiente, name='atender_siguiente'),
 	url(r'^finalizar_atencion/(?P<idTurno>\d+)/$', views.finalizar_atencion, name='finalizar_atencion'),
 	url(r'^derivar_atencion/(?P<box>\d+)/(?P<idTurno>\d+)/$', views.derivar_atencion, name='derivar_atencion'),
-
+	url(r'^ultimo_espera/$', views.ultimo_espera, name='ultimo_espera'),
+	url(r'^nuevo_atencion/$', views.nuevo_atencion, name='nuevo_atencion'),
+	url(r'^obtener_codigo_sector/(?P<id>\d+)/$', views.obtener_codigo_sector, name='obtener_codigo_sector'),
 
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),
