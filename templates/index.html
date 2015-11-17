@@ -23,10 +23,10 @@
 			<a href="{% url 'sector' %}">Gestionar Sectores</a><br>	
 			<a href="{% url 'boxAtencion' %}">Gestionar Box de Atencion</a><br>
 			<a href="{% url 'turno' %}">Gestionar Turnos</a><br>
-			<a href="{% url 'vista_cliente' %}"> Vista del cliente </a><br>
-			<a href="{% url 'ultimos_turnos' %}"> Ultimos Turnos </a><br>
+			<a href="{% url 'vista_cliente' %}" target="_blank"> Vista del cliente </a><br>
+			<a href="{% url 'ultimos_turnos' %}" target="_blank"> Ultimos Turnos </a><br>
 			{% for box in boxes %}
-				<a href="{% url 'vista_empleado' box.id %}"> Box nro. {{ box.nro_box }} - Empleado: {{ box.empleado }}</a><br>
+				<a href="{% url 'vista_empleado' box.id %}" target="_blank"> Box nro. {{ box.nro_box }} - Empleado: {{ box.empleado }}</a><br>
 			{% endfor %}	
 
 		</aside>
