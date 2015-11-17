@@ -13,7 +13,9 @@ urlpatterns = [
 	url(r'^finalizar_atencion/(?P<idTurno>\d+)/$', views.finalizar_atencion, name='finalizar_atencion'),
 	url(r'^derivar_atencion/(?P<box>\d+)/(?P<idTurno>\d+)/$', views.derivar_atencion, name='derivar_atencion'),
 	url(r'^ultimo_espera/$', views.ultimo_espera, name='ultimo_espera'),
+	url(r'^ultimo_atencion/$', views.ultimo_atencion, name='ultimo_atencion'),
 	url(r'^nuevo_atencion/$', views.nuevo_atencion, name='nuevo_atencion'),
+	url(r'^ultimo_finalizado/$', views.ultimo_finalizado, name='ultimo_finalizado'),
 
 	url(r'^tipo_cliente/$', views.tipo_cliente, name='tipo_cliente'),
 	url(r'^tipo_cliente_nuevo/$', views.tipo_cliente_nuevo, name = 'tipo_cliente_nuevo'),

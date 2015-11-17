@@ -3,11 +3,11 @@
 {% block turno %}
 	<div class="row">
 	<div class="col-md-6">
-	<center><h1 class="solicitar-lbl">Ultimos Turnos</h1></center>
+	<center><h1 class="solicitar-lbl">Ultimos Turnos solicitados</h1></center>
 	<table class="table table-condensed" id="tabla-turnos">
 				<tbody class="solicitar-lbl">
 					{% for elemento in ultimos_turnos %}
-					<tr id="{{elemento.id}}">
+					<tr id="espera{{elemento.id}}">
 						<td>
 							{{ elemento.sector.codigo }}{{ elemento.numero }}
 						</td>
@@ -25,11 +25,14 @@
 		<div class="col-md-6">
 			<center><h1 class="solicitar-lbl">Turnos en atencion</h1></center>
 			<table class="table table-condensed" id="tabla-atencion">
-				<tbody class="solicitar-lbl">
+				<tbody class="solicitar-lbl" id="body-atencion">
 					{% for elemento in turnos_atencion %}
-					<tr id="{{elemento.id}}">
+					<tr id="atencion{{elemento.id}}">
 						<td>
 							{{ elemento.sector.codigo }}{{ elemento.numero }}
+						</td>
+						<td>
+							Box nro. {{ elemento.atendido_por.nro_box }}
 						</td>
 						<td>
 							{% if elemento.cliente %}	{{ elemento.cliente }} {% else %} {{ elemento.no_cliente }} {% endif %}
@@ -43,39 +46,98 @@
 			</table>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<center><h1 class="solicitar-lbl">Ultimos turnos atendidos</h1></center>
+			<table class="table table-condensed" id="tabla-finalizado">
+				<tbody class="solicitar-lbl" id="body-finalizado">
+					<!--{% for elemento in turnos_atencion %}
+					<tr id="finalizado{{elemento.id}}">
+						<td>
+							{{ elemento.sector.codigo }}{{ elemento.numero }}
+						</td>
+						<td>
+							Box nro. {{ elemento.atendido_por.nro_box }}
+						</td>
+						<td>
+							{% if elemento.cliente %}	{{ elemento.cliente }} {% else %} {{ elemento.no_cliente }} {% endif %}
+						</td>
+						<td>
+							Espera desde: {{ elemento.fecha }}	
+						</td>
+					</tr>
+					{% endfor %}-->
+				</tbody>
+			</table>
+		</div>
+	</div>
 		<div>	
 			<div class="pull-right">
 			<iframe scrolling="no" frameborder="no" clocktype="html5" style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="http://www.clocklink.com/html5embed.php?clock=018&timezone=GMT-0300&color=yellow&size=240&Title=&Message=&Target=&From=2015,1,1,0,0,0&DateFormat=dd  MMM  yyyy &TimeFormat=hh:mm:ss TT&Color=yellow"></iframe>
 			</div>
+			<audio id="alerta" src="{{ '/static/sounds/alerta.mp3' }}" preload="auto"></audio>
 		</div>
 			<script type="text/javascript">
+				var finalizados =[]
 				setInterval(function(){
+					
 					$.get("/turnos/nuevo_atencion/",function(data){
-						if(data.length > 0){
-							for(var i=0;i<data.length;i++){
-								if ($('#'+data[i]['fields']['turno'])){
-									fila = $('#'+data[i]['fields']['turno']);
-									fila.fadeOut(2000);
-									atencion = $("#tabla-atencion");
-									setTimeout(atencion.append(fila),2000);
-									fila.fadeIn(2000);
-								}
-								
-							}
+						if ($('#espera'+data[0]['fields']['turno']).length > 0){
+							fila = $('#espera'+data[0]['fields']['turno']);
+							id = data[0]['fields']['turno'];
+							fila.fadeOut();
+							fila.remove();
 						}
 					});
-					$.get("/turnos/ultimo_espera/",function(data2){
-						if ($('#'+data2.id)){
-
-							tabla = $('#tabla-turnos');
-							tabla.append('<tr id="'+ data2.id +'" style="display:none"><td>'+data2.turno+'</td><td>'+ data2.cliente +'</td><td>Espera desde: '+ data2.fecha +'</td></tr>');
-							$('#'+data2.id).fadeIn(2000);
-						}
-						
+					
+				
+					$.get("/turnos/ultimo_atencion/",function(data1){
+						if ($('#atencion'+data1.id).length == 0){
 							
-						
+							tabla = $('#tabla-atencion');
+							tabla.prepend('<tr id="atencion'+ data1.id +'" style="display:none"><td>'+data1.turno+'</td><td>'+ data1.cliente +'</td><td>Box: '+ data1.box +'</td><td>Espera desde: '+ data1.fecha +'</td></tr>');
+							 document.getElementById('alerta').play();
+							$('#atencion'+data1.id).fadeIn(1000);
+							$('#atencion'+data1.id).fadeOut(1000);
+							$('#atencion'+data1.id).fadeIn(1000);
+							document.getElementById('alerta').play();
+							$('#atencion'+data1.id).fadeOut(1000);
+							$('#atencion'+data1.id).fadeIn(1000);
+						}
 					});
-				}, 2000);
+					
+				
+					$.get("/turnos/ultimo_espera/",function(data2){
+						if($('#atencion'+data2.id).length > 0){
+							$('#atencion'+data2.id).fadeOut();
+							$('#atencion'+data2.id).remove();
+						}
+						if ($('#espera'+data2.id).length == 0){
+							tabla = $('#tabla-turnos');
+							tabla.prepend('<tr id="espera'+ data2.id +'" style="display:none"><td>'+data2.turno+'</td><td>'+ data2.cliente +'</td><td>Espera desde: '+ data2.fecha +'</td></tr>');
+							$('#espera'+data2.id).fadeIn();
+						}
+					});
+
+					$.get("/turnos/ultimo_finalizado/",function(data2){
+						if($('#atencion'+data2.id).length > 0){
+							$('#atencion'+data2.id).fadeOut();
+							$('#atencion'+data2.id).remove();
+						}
+						if ($('#finalizado'+data2.id).length == 0){
+							finalizados.push(data2.id);
+							tabla = $('#tabla-finalizado');
+							tabla.prepend('<tr id="finalizado'+ data2.id +'" style="display:none"><td>'+data2.cliente+'</td><td>'+ data2.tramite +'</td><td>Esper&oacute;: '+ data2.tiempo_tramite +'</td></tr>');
+							if(finalizados.length == 5){
+								elemento = finalizados[0];
+								finalizados.splice(0,1);
+								$('#finalizado'+elemento).fadeOut();
+								$('#finalizado'+elemento).remove();
+							}
+							$('#finalizado'+data2.id).fadeIn();
+						}
+					});
+				},2000);
 			</script>
 		
 {% endblock turno %}

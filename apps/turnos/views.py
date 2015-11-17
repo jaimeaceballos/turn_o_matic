@@ -12,8 +12,10 @@ from .forms import *
 
 # Vista que renderiza el home
 def home (request):
-		
-	values={} 										# Genero un diccionario de datos vacio para pasarlo al contexto
+	boxes = BoxAtencion.objects.filter(habilitado = True)
+	values={
+		'boxes' : boxes,
+	} 										# Genero un diccionario de datos vacio para pasarlo al contexto
 	return render_to_response('index.html',values,context_instance = RequestContext(request)) # devuelvo al backend el template que debe renderizar con el contexto
 
 def vista_cliente(request):
@@ -501,6 +503,9 @@ def finalizar_atencion(request,idTurno):
 	turno.save()
 	turnos_atencion = TurnosAtencion.objects.get(turno=turno.id)
 	turnos_atencion.delete()
+	turno_finalizado = TurnosFinalizados()
+	turno_finalizado.turno = turno
+	turno_finalizado.save()
 	return HttpResponseRedirect(reverse('vista_empleado',args=[turno.atendido_por.id]))
 
 def derivar_atencion(request,box,idTurno):
@@ -545,9 +550,45 @@ def ultimo_espera(request):
 	data = json.dumps(ultimo_espera)
 	return HttpResponse(data, content_type='application/json')
 
+def ultimo_atencion(request):
+	data 		= request.POST
+	ultimo 	= Turnos.objects.get(id=TurnosAtencion.objects.latest('id').turno.id)
+	if ultimo.cliente:
+		cliente = ultimo.cliente.nombre
+	else:
+		cliente = ultimo.no_cliente
+	ultimo_espera = {
+		'id':ultimo.id,
+		'turno' : ultimo.sector.codigo+str(ultimo.numero),
+		'cliente' :cliente,
+		'fecha' : ultimo.fecha.strftime('%d de %b. %Y %H:%M:%S'),
+		'box' 	: ultimo.atendido_por.nro_box,
+	}
+	data = json.dumps(ultimo_espera)
+	return HttpResponse(data, content_type='application/json')
+
 def nuevo_atencion(request):
 	data 		= request.POST
 	nuevo_atencion 	= TurnosAtencion.objects.latest('id')
 	data = serializers.serialize("json", [nuevo_atencion,])
 	return HttpResponse(data, content_type='application/json')
 
+def ultimo_finalizado(request):
+	data 	= request.POST
+	ultimo = Turnos.objects.get(id=TurnosFinalizados.objects.latest('id').turno.id)
+	tiempo_tramite = ultimo.fecha_fin - ultimo.fecha 
+	horas = tiempo_tramite.seconds/3600
+	minutos = tiempo_tramite.seconds%3600/60
+	tiempo_tramite = str(horas)+' hs. '+str(minutos)+' min.'
+	if ultimo.cliente:
+		cliente = ultimo.cliente.nombre
+	else:
+		cliente = ultimo.no_cliente
+	ultimo_finalizado = {
+		'id':ultimo.id,
+		'cliente':cliente,
+		'tiempo_tramite':tiempo_tramite,
+		'tramite':ultimo.tramite.descripcion,
+	}
+	data = json.dumps(ultimo_finalizado)
+	return HttpResponse(data, content_type='application/json')

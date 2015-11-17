@@ -77,3 +77,6 @@ class TurnosAtencion(models.Model):
 
 class TurnosEspera(models.Model):
 	turno 	= models.ForeignKey(Turnos)
+
+class TurnosFinalizados(models.Model):
+	turno = models.ForeignKey(Turnos)
