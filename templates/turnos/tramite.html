@@ -1,6 +1,6 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
-{% block cuerpo %}
+{% block container-fluid %}
  <div class="container-fluid">
  	<h1>Clientes</h1>
 	<div class="row">
@@ -47,4 +47,4 @@
 	<a href="{% url 'tramite_nuevo' %}" class="btn btn-success pull-right">Nuevo</a>
 </div>
 
-{% endblock cuerpo %}
+{% endblock container-fluid %}

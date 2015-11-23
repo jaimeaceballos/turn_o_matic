@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	$("#id_documento").addClass("form-control");
 	$("#id_documento").attr("required","required");
 	$("#id_derivado_a").addClass("form-control");
@@ -13,3 +12,6 @@ $(document).ready(function() {
 		  }, 400);
 	});
 });
+
+
+

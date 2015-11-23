@@ -1,6 +1,6 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
-{% block cuerpo %}
+{% block container-fluid %}
 	<div class="jumbotron">
 		<h1>BOX DE ATENCION Nro. {{ box.nro_box }}</h1>
 		<h2>Estado  {% if box.habilitado %} <i class="glyphicon glyphicon-ok"></i> {% else %} <i class="glyphicon glyphicon-remove"></i> {% endif %}</h2>
@@ -45,4 +45,4 @@
 	{% else %}
 		<h1>Este box no esta habilitado para la atencion a clientes.</h1>
 	{% endif %}
-{% endblock cuerpo %}
+{% endblock container-fluid %}
